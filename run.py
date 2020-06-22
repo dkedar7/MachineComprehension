@@ -1,17 +1,29 @@
 import dash
+import pandas as pd
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
+from urllib.parse import quote as urlquote
+import flask
+from flask import Flask, send_from_directory, send_file, request, session, _request_ctx_stack
+import requests
 
+import base64
+import datetime
+import io
 import os
+import string
+import random
+import re
 
-from app import app, server
-from layout import layout
-from model import answer
+from desktop_layout import layout as desktop_layout
+# from mobile_layout import layout as mobile_layout
+from callbacks import *
+from app import app, server, cache, register_before_request
 from passages import passages
 
-app.layout = layout
+app.layout = desktop_layout
 
 ## Write callbacks
 
@@ -45,8 +57,8 @@ def get_prediction(context, query, n_clicks, data):
         return [''], data
 
     if n_clicks and data['clicks'] <= n_clicks:
-        data['clicks'] = n_clicks + 1
-        return [answer(context, query)], data
+        data['clicks'] = n_clicks + 1        
+        return [bidaf_answer(context, query)], data
 
     else:
         print (data, n_clicks)
