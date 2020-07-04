@@ -19,7 +19,7 @@ server = flask.Flask(__name__)
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets,
                 server=server)
 cache = Cache(app.server)
-app.title = "Data Analyzer"
+app.title = "Machine Comprehension"
 
 def register_before_request(app):
 

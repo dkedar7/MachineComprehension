@@ -85,6 +85,27 @@ input_question = dbc.Row(
     style = {'padding':'2% 0% 2% 0%'}
 )
 
+### Dropdown for selecting model
+model_dropdown = dbc.Row(
+    [
+        dbc.Col(
+            [
+                dcc.Dropdown(
+                    id='model_dropdown',
+                    options = [{'label':"BiDAF", 'value' : "bidaf_dd"},
+                            {'label':"DistilBERT", 'value' : "distilbert_dd"},
+                            {'label':"RoBERTA", 'value' : "roberta_dd"},
+                            {'label':"ALBERT", 'value' : "albert_dd"}
+                    ],
+                    value = "bidaf_dd",
+                    searchable=False,
+                    clearable=False
+                )
+            ]
+        )
+    ]
+)
+
 ### Submit button
 submit_button = dbc.Row(
     [
@@ -121,6 +142,7 @@ layout = dbc.Container(
         input_text,
         passage_dropdown,
         input_question,
+        model_dropdown,
         submit_button,
         output_text
     ],

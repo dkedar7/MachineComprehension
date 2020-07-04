@@ -45,24 +45,33 @@ def modify_input_text(dropdown_value):
         Input("input_text", "value"),
         Input("input_question", "value"),
         Input("submit_button", "n_clicks"),
+        Input("model_dropdown", "value")
     ],
     [
         State('memory-output', 'data')
     ]
 )
-def get_prediction(context, query, n_clicks, data):
+def get_prediction(context, query, n_clicks, model, data):
     if data is None:
         data = {}
         data['clicks'] = 1
         return [''], data
 
     if n_clicks and data['clicks'] <= n_clicks:
-        data['clicks'] = n_clicks + 1        
-        return [bidaf_answer(context, query)], data
+        data['clicks'] = n_clicks + 1
+        if model == "bidaf_dd":
+            return [bidaf_answer(context, query)], data
+        elif model == "distilbert_dd":
+            return [distilbert_answer(context, query)], data
+        elif model == "roberta_dd":
+            return [roberta_answer(context, query)], data
+        elif model == "albert_dd":
+            return [albert_answer(context, query)], data
 
     else:
         print (data, n_clicks)
         return [''], data
+       
 
 
 if __name__ == '__main__':
