@@ -58,7 +58,7 @@ def get_prediction(context, query, n_clicks, data):
 
     if n_clicks and data['clicks'] <= n_clicks:
         data['clicks'] = n_clicks + 1        
-        return [bidaf_answer(context, query)], data
+        return [albert_answer(context, query)], data
 
     else:
         print (data, n_clicks)

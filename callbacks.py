@@ -10,6 +10,9 @@ from transformers.tokenization_auto import AutoTokenizer
 
 
 def bidaf_answer(context, query):
+    '''
+    Callback for BiDAF
+    '''
     
     def preprocess(text):
        tokens = word_tokenize(text)
@@ -51,16 +54,34 @@ def transformer_models(model_name):
     return qa_pipeline
 
 def distilbert_answer(context, query):
+    '''
+    Callback for DistilBERT
+    '''
     distilbert_model = pipeline('question-answering')
-    res = distilbert_model(question=query, context=context)
-    return res['answer']
+    try:
+        res = distilbert_model(question=query, context=context)
+        return res['answer']
+    except:
+        return "Snap! The model couldn't find an answer. Try a different query."
 
 def roberta_answer(context, query):
+    '''
+    Callback for RoBERTa
+    '''
     roberta_model = transformer_models("deepset/roberta-base-squad2")
-    res = roberta_model(question=query, context=context)
-    return res['answer']
+    try:
+        res = roberta_model(question=query, context=context)
+        return res['answer']
+    except:
+        return "Snap! The model couldn't find an answer. Try a different query."
 
 def albert_answer(context, query):
+    '''
+    Callback for ALBERT
+    '''
     albert_model = transformer_models("twmkn9/albert-base-v2-squad2")
-    res = albert_model(question=query, context=context)
-    return res['answer']
+    try:
+        res = albert_model(question=query, context=context)
+        return res['answer']
+    except:
+        return "Snap! The model couldn't find an answer. Try a different query."
