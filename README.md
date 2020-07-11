@@ -3,7 +3,7 @@
 Web application to demonstrate ability of some state-of-the-art machine learning models at the questions answering task. The models chosen for the first deployment of the app are:
 
 1. BiDAF - ONNX pre-trained model
-2. DistilBERT - HuggingF ace implementation
+2. DistilBERT - HuggingFace implementation
 3. RoBERTa - Deepset implementation (on Hugging face model zoo)
 4. ALBERT - twmkn9 implmentation (on Hugging face model zoo)
 
