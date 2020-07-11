@@ -6,33 +6,59 @@ import dash_bootstrap_components as dbc
 from passages import passages
 
 ### Header
-
-### Title
-header = dbc.Row(
+navbar = dbc.Row(
             dbc.Col(
-                [
-                    html.H1('Machine Comprehension')
-                ], style = {'text-align':'center',
-                'padding':'3% 0% 0% 3%',
-                'font-family':'Verdana'} 
+                dbc.NavbarSimple(
+                    children=[
+                        html.Span(
+                            [
+                                html.A(
+                                    html.I(className = "fa-2x fab fa-github", style={'color':'#ffffff'}),
+                                href = "https://github.com/dkedar7/Data-Analyzer", target="_blank",
+                                className="mr-3"
+                                    ),
+                                    html.A(
+                                    html.I(className = "fa-2x fab fa-twitter-square", style={'color':'#ffffff'}),
+                                href = "https://www.twitter.com/dkedar7/", target="_blank",
+                                className="mr-3"
+                                    ),
+                                    html.A(
+                                    html.I(className = "fa-2x fab fa-linkedin", style={'color':'#ffffff'}),
+                                href = "https://www.linkedin.com/in/dkedar7/", target="_blank",
+                                className="mr-3"
+                                    )
+                            ]
+                        ),
+                    ],
+                    brand="Machine Comprehension",
+                    brand_href=None,
+                    color="#40587C",
+                    dark=True,
+                    style = {"font-size":"18", "padding":"2% 2% 0% 2%"}
+                )
             )
+    ,style ={"background-color":"#40587C"}
 )
 
+### Body title
 body_paragraph = dbc.Row(
     [
         dbc.Col(
-            [
-                html.P(
-                    [
-                    "Welcome to my Machine Comprehension web application. ",
+                [
+                    html.H4(
+                        "Compare some state-of-the-art machine learning models on the question answering task",
+                        style={'text-align':'center', "color":"white", "font-family": "Verdana; Gill Sans"}
+                            ),
                     html.Br(),
-                    "See how a modern Machine Learning model finds answers in a passage."
-                    ]
-                )
-            ]
-        )
+                    html.H5(
+                        "Currently uses BiDAF, DistilBERT, RoBERTa and ALBERT",
+                        style={'text-align':'center', "color":"white", "font-family": "Verdana; Gill Sans"}
+                            )
+                ],
+                style ={"padding":"2% 2% 5% 1%", "background-color":"#40587C"}
+               )
     ],
-    style = {'text-align':'center'}
+    style = {'text-align':'center', "padding":"2% 2% 5% 1%", "background-color":"#40587C"}
 )
 
         
@@ -44,14 +70,14 @@ input_text = dbc.Row(
                 dcc.Textarea(
                     id = "input_text",
                     placeholder =  "Write or paste your passage here or select an example passage from the dropdown below",
-                    style = {'padding':'2% 1% 2% 1%',
+                    style = {'padding':'1% 1% 2% 1%',
                             'width': '100%', 
                             'height': 200}
 )
             ]
         )
     ],
-    style = {'padding':'2% 0% 2% 0%'}
+    style = {'padding':'1% 0% 2% 0%'}
 )
 
 ### Dropdown for selecting passages
@@ -77,7 +103,7 @@ input_question = dbc.Row(
                 dbc.Input(
                     id='input_question',
                     value = 'What is this passage about?',
-                    style = {'padding':'2% 0% 2% 0%'}
+                    style = {'padding':'2% 1% 2% 1%'}
                 )
             ]
         )
@@ -117,17 +143,17 @@ submit_button = dbc.Row(
 )
 
 ### Output text
-output_text = dbc.Row(
+output_text = dbc.Spinner(
+    dbc.Row(
     [
         dbc.Col(
             [
-                html.P(id='output_text', 
-                children=['']
-                )
+                dbc.Jumbotron(html.P(id='output_text',children=['']))
             ]
         )
-    ],
+    ] ,
     style = {'text-align':'center', 'padding': '5% 0% 5% 0%'}
+    )
 )
 
 ### Footer
@@ -137,7 +163,7 @@ output_text = dbc.Row(
 layout = dbc.Container(
     [
         dcc.Store(id='memory-output', storage_type='memory'),
-        header,
+        navbar,
         body_paragraph,
         input_text,
         passage_dropdown,
