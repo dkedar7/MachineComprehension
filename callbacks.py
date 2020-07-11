@@ -2,12 +2,14 @@ import numpy as np
 import string
 from nltk import word_tokenize
 import onnxruntime as nxrun
+import joblib
 
 import torch
 from transformers.pipelines import pipeline
 from transformers.modeling_auto import AutoModelForQuestionAnswering
 from transformers.tokenization_auto import AutoTokenizer
 
+model_path = './models'
 
 def bidaf_answer(context, query):
     '''
@@ -25,7 +27,7 @@ def bidaf_answer(context, query):
        return words, chars
 
 
-    sess = nxrun.InferenceSession("./bidaf.onnx")
+    sess = nxrun.InferenceSession(model_path+"/BiDAF.pkl")
 
     cw, cc = preprocess(context)
     qw, qc = preprocess(query)
@@ -58,6 +60,7 @@ def distilbert_answer(context, query):
     Callback for DistilBERT
     '''
     distilbert_model = pipeline('question-answering')
+#     distilbert_model = joblib.load(model_path+'/DistilBERT.pkl')
     try:
         res = distilbert_model(question=query, context=context)
         return res['answer']
@@ -69,6 +72,7 @@ def roberta_answer(context, query):
     Callback for RoBERTa
     '''
     roberta_model = transformer_models("deepset/roberta-base-squad2")
+#     roberta_model = joblib.load(model_path + '/RoBERTa.pkl')
     try:
         res = roberta_model(question=query, context=context)
         return res['answer']
@@ -80,6 +84,7 @@ def albert_answer(context, query):
     Callback for ALBERT
     '''
     albert_model = transformer_models("twmkn9/albert-base-v2-squad2")
+#     albert_model = joblib.load(model_path + '/ALBERT.pkl')
     try:
         res = albert_model(question=query, context=context)
         return res['answer']
