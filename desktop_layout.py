@@ -5,7 +5,7 @@ import dash_bootstrap_components as dbc
 
 from passages import passages
 
-### Header
+### 1. Header
 navbar = dbc.Row(
             dbc.Col(
                 dbc.NavbarSimple(
@@ -40,7 +40,7 @@ navbar = dbc.Row(
     ,style ={"background-color":"#40587C"}
 )
 
-### Body title
+### 2. Body title
 body_paragraph = dbc.Row(
     [
         dbc.Col(
@@ -58,33 +58,32 @@ body_paragraph = dbc.Row(
                 style ={"padding":"2% 2% 5% 1%", "background-color":"#40587C"}
                )
     ],
-    style = {'text-align':'center', "padding":"2% 2% 5% 1%", "background-color":"#40587C"}
+    style = {'text-align':'center', "padding":"2% 2% 3% 1%", "background-color":"#40587C"}
 )
-
         
-### Input text
+### 3. Input text
 input_text = dbc.Row(
     [
         dbc.Col(
             [
+                html.P(html.B("Step 1. Enter a passage:")),
                 dcc.Textarea(
                     id = "input_text",
-                    placeholder =  "Write or paste your passage here or select an example passage from the dropdown below",
-                    style = {'padding':'1% 1% 2% 1%',
-                            'width': '100%', 
+                    placeholder =  "Write or paste your passage here or select one from the dropdown",
+                    style = {'width': '100%', 
                             'height': 200}
-)
+                )
             ]
         )
-    ],
-    style = {'padding':'1% 0% 2% 0%'}
+    ]
 )
 
-### Dropdown for selecting passages
+### 4. Dropdown for selecting passages
 passage_dropdown = dbc.Row(
     [
         dbc.Col(
             [
+                html.P(html.B("Or select one from these:")),
                 dcc.Dropdown(
                     id='passage_dropdown',
                     options=[{'label':key, 'value' : key} for key in passages],
@@ -95,11 +94,19 @@ passage_dropdown = dbc.Row(
     ]
 )
 
+### 3 + 4. Passage suggestion to passage input area
+input_area = dbc.Row(
+                [dbc.Col(input_text, width = 8),
+                dbc.Col(passage_dropdown, width = 4)],
+    style = {'padding':'2% 0% 2% 0%'}
+)
+
 ### Input_question
 input_question = dbc.Row(
     [
         dbc.Col(
             [
+                html.P(html.B("Step 2. Ask a question:")),
                 dbc.Input(
                     id='input_question',
                     value = 'What is this passage about?',
@@ -116,6 +123,7 @@ model_dropdown = dbc.Row(
     [
         dbc.Col(
             [
+                html.P(html.B("Step 3. Choose a model:")),
                 dcc.Dropdown(
                     id='model_dropdown',
                     options = [{'label':"BiDAF", 'value' : "bidaf_dd"},
@@ -135,7 +143,7 @@ model_dropdown = dbc.Row(
 ### Submit button
 submit_button = dbc.Row(
     [
-        dbc.Button("Submit", id = 'submit_button', size="md",
+        dbc.Button("Find answer", id = 'submit_button', size="md",
         color="primary", disabled = False,
         className = "mt-3 mx-auto")
     ],
@@ -165,8 +173,9 @@ layout = dbc.Container(
         dcc.Store(id='memory-output', storage_type='memory'),
         navbar,
         body_paragraph,
-        input_text,
-        passage_dropdown,
+#         input_text,
+#         passage_dropdown,
+        input_area,
         input_question,
         model_dropdown,
         submit_button,
