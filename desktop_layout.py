@@ -5,6 +5,8 @@ import dash_bootstrap_components as dbc
 
 from passages import passages
 
+theme_color_code = "#038387" #Teal
+
 ### 1. Header
 navbar = dbc.Row(
             dbc.Col(
@@ -14,7 +16,7 @@ navbar = dbc.Row(
                             [
                                 html.A(
                                     html.I(className = "fa-2x fab fa-github", style={'color':'#ffffff'}),
-                                href = "https://github.com/dkedar7/Data-Analyzer", target="_blank",
+                                href = "https://github.com/dkedar7/MachineComprehension", target="_blank",
                                 className="mr-3"
                                     ),
                                     html.A(
@@ -32,12 +34,12 @@ navbar = dbc.Row(
                     ],
                     brand="Machine Comprehension",
                     brand_href=None,
-                    color="#40587C",
+                    color=theme_color_code,
                     dark=True,
                     style = {"font-size":"18", "padding":"2% 2% 0% 2%"}
                 )
             )
-    ,style ={"background-color":"#40587C"}
+    ,style ={"background-color":theme_color_code}
 )
 
 ### 2. Body title
@@ -55,10 +57,10 @@ body_paragraph = dbc.Row(
                         style={'text-align':'center', "color":"white", "font-family": "Verdana; Gill Sans"}
                             )
                 ],
-                style ={"padding":"2% 2% 5% 1%", "background-color":"#40587C"}
+                style ={"padding":"2% 2% 5% 1%", "background-color":theme_color_code}
                )
     ],
-    style = {'text-align':'center', "padding":"2% 2% 3% 1%", "background-color":"#40587C"}
+    style = {'text-align':'center', "padding":"2% 2% 3% 1%", "background-color":theme_color_code}
 )
         
 ### 3. Input text
@@ -164,8 +166,72 @@ output_text = dbc.Spinner(
     )
 )
 
-### Footer
+# Interpretability and About models section
+tabs = dbc.Row(
+            dbc.Col(
+                dbc.Card(
+                    [
+                        dbc.CardHeader(
+                            dbc.Tabs(
+                                [
+                                    dbc.Tab(label="Interpret", tab_id="interpret-tab"),
+                                    dbc.Tab(label="About Models", tab_id="about-models-tab"),
+                                ],
+                                id="tabs",
+                                card=True,
+                                active_tab="interpret-tab",
+                            )
+                        ),
+                        dbc.CardBody(html.P(id="card-content", className="card-text")),
+                    ]
+                )
+            )
+)
 
+####### Footer #######
+footer = dbc.Row(
+    [
+        dbc.Col(
+            [
+                html.P(
+                [
+                    """
+                    This application uses open-source work from 
+                """,
+                html.A(
+                    html.U("Hugging Face"), 
+                href = "https://huggingface.co/",
+                target = "_blank",
+                style = {"color":"white"}),
+                """
+                .
+                """
+                ],
+                style = {"color":"white"}
+            )
+            ],
+            className="footer-disclaimer-content ",
+            width=8,
+        ),
+        dbc.Col(
+            [
+                html.Span(
+                    html.A(
+                        html.I(className="fa-2x fab fa-github", style={"color":"#ffffff"}),
+                        href="https://github.com/dkedar7/MachineComprehension",
+                        target = "_blank"
+                    ),
+                ),
+                html.Span(
+                    "   Copyright 2020", style={"color":"white"}
+                ),
+            ],
+            width={"size" : 3, "offset":1}
+        ),
+    ],
+    style ={"background-color":theme_color_code, "padding" : "2% 0% 0% 2%"}
+)
+    
 
 ### Bring it together
 layout = dbc.Container(
@@ -173,13 +239,13 @@ layout = dbc.Container(
         dcc.Store(id='memory-output', storage_type='memory'),
         navbar,
         body_paragraph,
-#         input_text,
-#         passage_dropdown,
         input_area,
         input_question,
         model_dropdown,
         submit_button,
-        output_text
+        output_text,
+        tabs,
+        footer
     ],
     fluid = False
 )
