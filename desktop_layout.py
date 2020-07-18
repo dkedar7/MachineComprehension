@@ -87,7 +87,7 @@ passage_dropdown = dbc.Row(
                 dcc.Dropdown(
                     id='passage_dropdown',
                     options=[{'label':key, 'value' : key} for key in passages],
-                    placeholder = 'Select a passage or write your own'
+                    placeholder = 'Passage suggestions'
             )
             ]
         )
