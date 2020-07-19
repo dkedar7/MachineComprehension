@@ -1,3 +1,7 @@
+import dash_core_components as dcc
+import dash_html_components as html
+import dash_bootstrap_components as dbc
+
 import numpy as np
 import string
 from nltk import word_tokenize
@@ -90,3 +94,25 @@ def albert_answer(context, query):
         return res['answer']
     except:
         return "Snap! The model couldn't find an answer. Try a different query."
+    
+def about_models(model):
+    if model == 'about-bidaf':
+        about_element = html.P('''
+        Researchers from the University of Washington and Allen Institute of Artificial 
+        Intelligence published a neural network model called BiDAF, short for 
+        Bi-Directional Attention Flow in 2016. This model stood at the top of the 
+        Stanford Question and Answering Dataset (SQuAD) leaderboard for several weeks. 
+        Although many newer models beat it eventually, BiDAF was instrumental in laying 
+        down the work for some other pathbreaking models like BERT and ELMo.
+
+        This app uses the pretrained weights of the model as found here in the ONNX format.
+        ''', className="card-text")
+        
+    elif model == 'interpret-tab':
+        about_element = html.P('Coming soon!', className="card-text")
+        
+    else:
+        about_element = html.P('Coming soon!', className="card-text")
+    
+    return about_element
+    

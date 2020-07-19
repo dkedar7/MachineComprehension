@@ -72,7 +72,10 @@ def get_prediction(context, query, n_clicks, model, data):
         print (data, n_clicks)
         return [''], data
        
-
+@app.callback(Output('card-content', 'children'),
+             [Input('tabs', 'active_tab')])
+def get_about_model(model): 
+    return about_models(model)
 
 if __name__ == '__main__':
     app.server.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))

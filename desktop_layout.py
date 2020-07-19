@@ -57,10 +57,10 @@ body_paragraph = dbc.Row(
                         style={'text-align':'center', "color":"white", "font-family": "Verdana; Gill Sans"}
                             )
                 ],
-                style ={"padding":"2% 2% 5% 1%", "background-color":theme_color_code}
+                style ={"padding":"2% 2% 3% 1%", "background-color":theme_color_code}
                )
     ],
-    style = {'text-align':'center', "padding":"2% 2% 3% 1%", "background-color":theme_color_code}
+    style = {'text-align':'center', "padding":"2% 2% 1% 1%", "background-color":theme_color_code}
 )
         
 ### 3. Input text
@@ -175,14 +175,17 @@ tabs = dbc.Row(
                             dbc.Tabs(
                                 [
                                     dbc.Tab(label="Interpret", tab_id="interpret-tab"),
-                                    dbc.Tab(label="About Models", tab_id="about-models-tab"),
+                                    dbc.Tab(label="About BiDAF", tab_id="about-bidaf"),
+                                    dbc.Tab(label="About DistilBERT", tab_id="about-distilbert"),
+                                    dbc.Tab(label="About RoBERTa", tab_id="about-roberta"),
+                                    dbc.Tab(label="About ALBERT", tab_id="about-albert"),
                                 ],
                                 id="tabs",
                                 card=True,
                                 active_tab="interpret-tab",
                             )
                         ),
-                        dbc.CardBody(html.P(id="card-content", className="card-text")),
+                        dbc.CardBody(id="card-content"),
                     ]
                 )
             )
@@ -195,7 +198,7 @@ footer = dbc.Row(
             [
                 html.P(
                 [
-                    """
+                """
                     This application uses open-source work from 
                 """,
                 html.A(
