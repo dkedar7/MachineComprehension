@@ -97,16 +97,26 @@ def albert_answer(context, query):
     
 def about_models(model):
     if model == 'about-bidaf':
-        about_element = html.P('''
-        Researchers from the University of Washington and Allen Institute of Artificial 
-        Intelligence published a neural network model called BiDAF, short for 
-        Bi-Directional Attention Flow in 2016. This model stood at the top of the 
-        Stanford Question and Answering Dataset (SQuAD) leaderboard for several weeks. 
-        Although many newer models beat it eventually, BiDAF was instrumental in laying 
-        down the work for some other pathbreaking models like BERT and ELMo.
-
-        This app uses the pretrained weights of the model as found here in the ONNX format.
-        ''', className="card-text")
+          about_element = html.P([
+            dcc.Markdown(
+                '''
+                
+                #### BiDAF, short for Bi-Directional Attention Flow
+                
+                Researchers from the University of Washington and Allen Institute of Artificial 
+                Intelligence published BiDAF in 2016.
+                
+                
+                BiDAF stood at the top of the 
+                Stanford Question and Answering Dataset (SQuAD) leaderboard for several weeks.
+                Although many newer models beat it eventually, BiDAF was instrumental in laying 
+                down the work for some other pathbreaking models like BERT and ELMo.
+                
+                This app uses the pretrained weights of the model as found [here]
+                (https://github.com/onnx/models) in the ONNX format.
+                '''            
+            )
+        ])
         
     elif model == 'interpret-tab':
         about_element = html.P('Coming soon!', className="card-text")
