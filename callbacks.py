@@ -1,13 +1,19 @@
+import dash_core_components as dcc
+import dash_html_components as html
+import dash_bootstrap_components as dbc
+
 import numpy as np
 import string
 from nltk import word_tokenize
 import onnxruntime as nxrun
+import joblib
 
 import torch
 from transformers.pipelines import pipeline
 from transformers.modeling_auto import AutoModelForQuestionAnswering
 from transformers.tokenization_auto import AutoTokenizer
 
+model_path = './models'
 
 def bidaf_answer(context, query):
     '''
@@ -25,7 +31,7 @@ def bidaf_answer(context, query):
        return words, chars
 
 
-    sess = nxrun.InferenceSession("./bidaf.onnx")
+    sess = nxrun.InferenceSession(model_path+"/BiDAF.pkl")
 
     cw, cc = preprocess(context)
     qw, qc = preprocess(query)
@@ -58,6 +64,7 @@ def distilbert_answer(context, query):
     Callback for DistilBERT
     '''
     distilbert_model = pipeline('question-answering')
+#     distilbert_model = joblib.load(model_path+'/DistilBERT.pkl')
     try:
         res = distilbert_model(question=query, context=context)
         return res['answer']
@@ -69,6 +76,7 @@ def roberta_answer(context, query):
     Callback for RoBERTa
     '''
     roberta_model = transformer_models("deepset/roberta-base-squad2")
+#     roberta_model = joblib.load(model_path + '/RoBERTa.pkl')
     try:
         res = roberta_model(question=query, context=context)
         return res['answer']
@@ -80,8 +88,41 @@ def albert_answer(context, query):
     Callback for ALBERT
     '''
     albert_model = transformer_models("twmkn9/albert-base-v2-squad2")
+#     albert_model = joblib.load(model_path + '/ALBERT.pkl')
     try:
         res = albert_model(question=query, context=context)
         return res['answer']
     except:
         return "Snap! The model couldn't find an answer. Try a different query."
+    
+def about_models(model):
+    if model == 'about-bidaf':
+          about_element = html.P([
+            dcc.Markdown(
+                '''
+                
+                #### BiDAF, short for Bi-Directional Attention Flow
+                
+                Researchers from the University of Washington and Allen Institute of Artificial 
+                Intelligence published BiDAF in 2016.
+                
+                
+                BiDAF stood at the top of the 
+                Stanford Question and Answering Dataset (SQuAD) leaderboard for several weeks.
+                Although many newer models beat it eventually, BiDAF was instrumental in laying 
+                down the work for some other pathbreaking models like BERT and ELMo.
+                
+                This app uses the pretrained weights of the model as found [here]
+                (https://github.com/onnx/models) in the ONNX format.
+                '''            
+            )
+        ])
+        
+    elif model == 'interpret-tab':
+        about_element = html.P('Coming soon!', className="card-text")
+        
+    else:
+        about_element = html.P('Coming soon!', className="card-text")
+    
+    return about_element
+    
