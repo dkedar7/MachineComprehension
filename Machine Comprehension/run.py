@@ -18,7 +18,7 @@ import random
 import re
 
 from desktop_layout import layout as desktop_layout
-# from mobile_layout import layout as mobile_layout
+# from mobile_layout import _apply_mobile_layout
 from callbacks import *
 from app import app, server, cache, register_before_request
 from passages import passages

@@ -9,7 +9,7 @@ from flask import request
 
 import re
 from desktop_layout import layout as desktop_layout
-# from mobile_layout import layout as mobile_layout -> Only a single layout for development
+from mobile_layout import _apply_mobile_layout
 
 external_stylesheets = [dbc.themes.BOOTSTRAP,
 "https://use.fontawesome.com/releases/v5.9.0/css/all.css"]
@@ -24,7 +24,7 @@ app.title = "Machine Comprehension"
 def register_before_request(app):
 
     @app.server.before_request
-    def before_request_func():      # pylint: disable=W0612
+    def before_request_func():
         """Checks if user agent is from mobile to determine which layout
         to serve before user makes any requests.
         """
@@ -35,6 +35,6 @@ def register_before_request(app):
         is_mobile = len(re_mobile.findall(agent)) > 0
 
         if is_mobile:
-            app.layout = mobile_layout
+            _apply_mobile_layout()
         else:  # Desktop request
             app.layout = desktop_layout
