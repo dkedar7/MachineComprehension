@@ -188,7 +188,8 @@ tabs = dbc.Row(
                         dbc.CardBody(id="card-content"),
                     ]
                 )
-            )
+            ),
+    style = {'height':'50vh'}
 )
 
 ####### Footer #######
@@ -237,18 +238,39 @@ footer = dbc.Row(
     
 
 ### Bring it together
-layout = dbc.Container(
+top = dbc.Container(
     [
         dcc.Store(id='memory-output', storage_type='memory'),
         navbar,
         body_paragraph,
+    ],
+    fluid = True
+)
+
+middle = dbc.Container(
+    [
         input_area,
         input_question,
         model_dropdown,
         submit_button,
         output_text,
-        tabs,
-        footer
+        tabs
     ],
     fluid = False
+)
+
+bottom = dbc.Container(
+    [
+        footer
+    ],
+    fluid = True
+)
+
+layout = dbc.Container(
+    [
+    top, 
+    middle,
+    bottom
+    ],
+    fluid = True
 )
